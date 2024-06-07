@@ -10,20 +10,25 @@ import {
   Alert,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
+import { loginUser } from "@/redux/UserReducer";
+import { useDispatch } from "react-redux";
 export default function LoginScreen() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
-    if (!email || !password) {
+    if (!firstName || !lastName || !email) {
       setError(true);
       return Alert.alert("Login Error", "Please enter your credentials");
     }
+    dispatch(loginUser({ firstName, lastName, email }));
     router.replace("/");
   };
 
@@ -35,11 +40,11 @@ export default function LoginScreen() {
         alignItems: "center",
       }}
     >
-      <KeyboardAvoidingView>
-        <View style={{ alignItems: "center" }}>
+      <SafeAreaView>
+        <View style={{ alignItems: "center", marginTop: 50 }}>
           <Text
             style={{
-              fontSize: 17,
+              fontSize: 32,
               fontWeight: "bold",
               marginTop: 12,
               color: "#041E42",
@@ -49,7 +54,7 @@ export default function LoginScreen() {
           </Text>
         </View>
 
-        <View style={{ marginTop: 70 }}>
+        <View style={{ marginTop: 90 }}>
           <View
             style={{
               flexDirection: "row",
@@ -59,7 +64,68 @@ export default function LoginScreen() {
               paddingVertical: 5,
               paddingHorizontal: 15,
               borderRadius: 5,
-              marginTop: 30,
+
+              marginHorizontal: "auto",
+              maxWidth: "100%",
+            }}
+          >
+            <Ionicons name="person" size={24} color="gray" />
+
+            <TextInput
+              value={firstName}
+              onChangeText={(text) => setFirstName(text)}
+              style={{
+                color: "gray",
+                marginVertical: 10,
+                width: 250,
+                height: 30,
+                fontSize: 16,
+              }}
+              placeholder="Enter your first name"
+            />
+          </View>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 5,
+              backgroundColor: "#D0D0D0",
+              paddingVertical: 5,
+              paddingHorizontal: 15,
+              borderRadius: 5,
+
+              marginHorizontal: "auto",
+              maxWidth: "100%",
+            }}
+          >
+            <Ionicons name="person" size={24} color="gray" />
+
+            <TextInput
+              value={lastName}
+              onChangeText={(text) => setLastName(text)}
+              style={{
+                color: "gray",
+                marginVertical: 10,
+                width: 250,
+                height: 30,
+                fontSize: 16,
+              }}
+              placeholder="Enter your last name"
+            />
+          </View>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 5,
+              backgroundColor: "#D0D0D0",
+              paddingVertical: 5,
+              paddingHorizontal: 15,
+              borderRadius: 5,
 
               marginHorizontal: "auto",
               maxWidth: "100%",
@@ -83,51 +149,13 @@ export default function LoginScreen() {
                 fontSize: 16,
                 // padding: 10,
               }}
-              placeholder="enter your Email"
+              placeholder="Enter your Email"
               keyboardType="email-address"
             />
           </View>
         </View>
 
-        <View style={{ marginTop: 10 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 5,
-              backgroundColor: "#D0D0D0",
-              paddingVertical: 5,
-              paddingHorizontal: 15,
-              borderRadius: 5,
-              marginTop: 30,
-
-              marginHorizontal: "auto",
-              maxWidth: "100%",
-            }}
-          >
-            <AntDesign
-              name="lock1"
-              size={24}
-              color="gray"
-              style={{ marginLeft: 8 }}
-            />
-
-            <TextInput
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={true}
-              style={{
-                color: "gray",
-                marginVertical: 10,
-                width: 250,
-                height: 30,
-                fontSize: 16,
-              }}
-              placeholder="enter your Password"
-            />
-          </View>
-        </View>
-        {!error && (
+        {error && (
           <View
             style={{
               marginTop: 12,
@@ -189,7 +217,7 @@ export default function LoginScreen() {
             Don't have an account? Sign Up
           </Text>
         </Pressable>
-      </KeyboardAvoidingView>
+      </SafeAreaView>
     </SafeAreaView>
   );
 }

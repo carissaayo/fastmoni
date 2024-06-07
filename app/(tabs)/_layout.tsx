@@ -28,12 +28,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="create-user"
         options={{
-          title: "Explore",
+          title: "Add User",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+              name={focused ? "add-circle" : "add-circle-outline"}
               color={color}
             />
           ),

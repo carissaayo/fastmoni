@@ -17,15 +17,15 @@ import {
   ScrollView,
 } from "react-native";
 
-export default function User() {
+export default function User({ user }) {
   return (
     <View
       style={{
         flexDirection: "row",
-        gap: 30,
+        gap: 10,
         justifyContent: "space-between",
         width: "100%",
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         borderBottomWidth: 1,
         borderBottomColor: "black",
         paddingVertical: 5,
@@ -34,15 +34,15 @@ export default function User() {
     >
       <View style={{}}>
         <Text style={{ fontSize: 16 }}> First Name</Text>
-        <Text>john Doe</Text>
+        <Text>{user?.first_name}</Text>
       </View>
       <View style={{}}>
         <Text style={{ fontSize: 16 }}>Last Name</Text>
-        <Text>john Doe</Text>
+        <Text>{user?.last_name}</Text>
       </View>
       <View style={{}}>
         <Text style={{ fontSize: 16 }}>Email</Text>
-        <Text>ahjao@</Text>
+        <Text>{user?.email}</Text>
       </View>
       <Pressable
         style={{
@@ -56,7 +56,14 @@ export default function User() {
         }}
       >
         <Text style={{ fontSize: 16 }}>
-          <Link href="edit-user">Edit User</Link>
+          <Link
+            href={{
+              pathname: "/edit-user",
+              params: { id: user?.id },
+            }}
+          >
+            Edit User
+          </Link>
         </Text>
       </Pressable>
     </View>
